@@ -1,0 +1,6 @@
+{% extends 'BudgetingApp/base.html' %}
+{% block content %}
+  <h2>{{ object.name }}</h2>
+  <a class="btn btn-secondary" href="{% url 'category-list' %}">Back</a>
+  <a class="btn btn-primary" href="{% url 'category-edit' object.pk %}">Edit</a>
+{% endblock %}
