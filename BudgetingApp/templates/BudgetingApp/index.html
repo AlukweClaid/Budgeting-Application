@@ -1,0 +1,45 @@
+{% extends 'BudgetingApp/base.html' %}
+{% block content %}
+  <div class="bg-info bg-opacity-10 p-5 rounded mb-4">
+    <h2 class="mb-2">📊 Welcome to Your Budget Dashboard</h2>
+    <p class="lead mb-0">Manage your budget, track expenses, and achieve your financial goals.</p>
+  </div>
+
+  <div class="row">
+    <div class="col-md-3 mb-4">
+      <div class="card border-0 shadow-sm h-100">
+        <div class="card-body text-center">
+          <h5 class="card-title">Budget Items</h5>
+          <p class="display-5 text-success mb-3">{{ counts.budget_items }}</p>
+          <a href="{% url 'budgetitem-list' %}" class="btn btn-sm btn-outline-success">View</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3 mb-4">
+      <div class="card border-0 shadow-sm h-100">
+        <div class="card-body text-center">
+          <h5 class="card-title">Categories</h5>
+          <p class="display-5 text-info mb-3">{{ counts.categories }}</p>
+          <a href="{% url 'category-list' %}" class="btn btn-sm btn-outline-info">View</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3 mb-4">
+      <div class="card border-0 shadow-sm h-100">
+        <div class="card-body text-center">
+          <h5 class="card-title">Transactions</h5>
+          <p class="display-5 text-warning mb-3">{{ counts.transactions }}</p>
+          <a href="{% url 'transaction-list' %}" class="btn btn-sm btn-outline-warning">View</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3 mb-4">
+      <div class="card border-0 shadow-sm h-100">
+        <div class="card-body text-center">
+          <h5 class="card-title">Goals</h5>
+          <p class="display-5 text-danger mb-3">{{ counts.goals }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

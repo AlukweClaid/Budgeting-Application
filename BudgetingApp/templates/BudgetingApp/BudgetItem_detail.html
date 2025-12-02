@@ -1,0 +1,26 @@
+{% extends 'BudgetingApp/base.html' %}
+{% block content %}
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <h2 class="mb-4">{{ object.name }}</h2>
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <dl class="row">
+            <dt class="col-sm-4 fw-bold">Amount</dt>
+            <dd class="col-sm-8">{{ object.amount }}</dd>
+            <dt class="col-sm-4 fw-bold">Urgency</dt>
+            <dd class="col-sm-8">
+              <span class="badge bg-{% if object.urgency == 'high' %}danger{% elif object.urgency == 'medium' %}warning{% else %}info{% endif %}">{{ object.urgency|title }}</span>
+            </dd>
+            <dt class="col-sm-4 fw-bold">Description</dt>
+            <dd class="col-sm-8">{{ object.description|default:"N/A" }}</dd>
+          </dl>
+        </div>
+      </div>
+      <div class="d-grid gap-2 d-sm-flex mt-3">
+        <a class="btn btn-secondary" href="{% url 'budgetitem-list' %}">Back</a>
+        <a class="btn btn-success" href="{% url 'budgetitem-edit' object.pk %}">Edit</a>
+      </div>
+    </div>
+  </div>
+{% endblock %}
