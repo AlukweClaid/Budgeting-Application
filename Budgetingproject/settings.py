@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-*x-sh*2)auod+hu4=@8#25rw0(be15gv9-b7_&i(m34$qkwpfw
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'testserver']
 
 
 # Application definition
@@ -121,3 +121,8 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Authentication redirects
+LOGIN_REDIRECT_URL = '/BudgetingApp/'
+LOGOUT_REDIRECT_URL = '/BudgetingApp/'
+LOGIN_URL = '/BudgetingApp/login/'
