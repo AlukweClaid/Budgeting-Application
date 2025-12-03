@@ -4,6 +4,11 @@ from . import views
 urlpatterns = [
     path('', views.budget_home, name='budget_home'),
 
+    # Authentication URLs
+    path('login/', views.CustomLoginView.as_view(), name='login'),
+    path('logout/', views.CustomLogoutView.as_view(), name='logout'),
+    path('register/', views.RegisterView.as_view(), name='register'),
+
     # BudgetItem CRUD
     path('budgetitems/', views.BudgetItemListView.as_view(), name='budgetitem-list'),
     path('budgetitems/add/', views.BudgetItemCreateView.as_view(), name='budgetitem-add'),

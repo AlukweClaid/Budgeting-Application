@@ -21,6 +21,24 @@
             <li class="nav-item"><a class="nav-link" href="{% url 'budgetitem-list' %}">Items</a></li>
             <li class="nav-item"><a class="nav-link" href="{% url 'category-list' %}">Categories</a></li>
             <li class="nav-item"><a class="nav-link" href="{% url 'transaction-list' %}">Transactions</a></li>
+            {% if user.is_authenticated %}
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="userMenu" role="button" data-bs-toggle="dropdown" aria-expanded="false">{{ user.username }}</a>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userMenu">
+                  <li><a class="dropdown-item" href="#">Profile</a></li>
+                  <li><hr class="dropdown-divider"></li>
+                  <li>
+                    <form method="post" action="{% url 'logout' %}" class="m-0">
+                      {% csrf_token %}
+                      <button type="submit" class="dropdown-item">Logout</button>
+                    </form>
+                  </li>
+                </ul>
+              </li>
+            {% else %}
+              <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Login</a></li>
+              <li class="nav-item"><a class="nav-link" href="{% url 'register' %}">Register</a></li>
+            {% endif %}
           </ul>
         </div>
       </div>
