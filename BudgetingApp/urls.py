@@ -63,8 +63,12 @@ urlpatterns = [
     path('reports/<int:pk>/', views.FinancialReportDetailView.as_view(), name='financialreport-detail'),
 
     # MPESA Payment routes
-    path('payments/', views.payment, name='payments'),
-    path('mpesa-callback/', views.mpesa_callback, name='mpesa-callback'),
-    path('payment-success/', views.payment_success, name='payment-success'),
-    path('index/', views.index, name='index'),
+
+   # M-PESA PAYMENT URLS
+path('payments/', views.payment_form, name='payments'),  
+path('pay/process/', views.process_payment, name='process_payment'),
+path('mpesa-callback/', views.mpesa_callback, name='mpesa-callback'),
+#path('index/', views.index, name='index'),
+
+
 ]
