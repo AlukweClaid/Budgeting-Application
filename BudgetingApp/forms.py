@@ -131,3 +131,10 @@ class PaymentForm(forms.Form):
         super().__init__(*args, **kwargs)
         if user is not None:
             self.fields['budget_item'].queryset = BudgetItem.objects.filter(owner=user)
+
+# M-PESA PAYMENT FORM
+from django import forms
+
+class PaymentForm(forms.Form):
+    phone_number = forms.CharField(max_length=12, label="Phone Number")
+    amount = forms.IntegerField(label="Amount")

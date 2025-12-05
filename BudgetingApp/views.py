@@ -54,7 +54,7 @@ from .forms import (
 # -----------------------------
 def index(request):
     cl = MpesaClient()
-    phone_number = '0110085152'
+    phone_number = '071XXXXXXX'
     amount = 1
     account_reference = 'reference'
     transaction_desc = 'Description'
@@ -474,75 +474,57 @@ class FinancialReportDetailView(LoginRequiredMixin, DetailView):
 
 
 
+## M-PESA PAYMENT VIEWS
+from django.shortcuts import render, redirect
+from django.http import HttpResponse
+from .forms import PaymentForm
 
-def payment(request):
-    """
-    Display payment form and trigger STK push on POST.
-    Uses MPESA credentials from Django settings.
-    """
+
+def payment_form(request):
+    form = PaymentForm()
+    return render(request, "BudgetingApp/payment_form.html", {"form": form})
+
+def process_payment(request):
     if request.method == "POST":
-        phone = request.POST.get("phone")
-        amount = request.POST.get("amount")
+        form = PaymentForm(request.POST)
+        if form.is_valid():
+            phone_number = form.cleaned_data["phone_number"]
+            amount = form.cleaned_data["amount"]
 
-        # basic validation
-        if not phone or not amount:
-            from django.contrib import messages
-            messages.error(request, "Phone and amount are required.")
-            return render(request, "BudgetingApp/payment_form.html", {"phone": phone, "amount": amount})
+            cl = MpesaClient()
+            account_reference = "reference"
+            transaction_desc = "Website Payment"
+            callback_url = "https://api.darajambili.com/express-payment"
 
-        try:
-            # get access token
-            token_url = "https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials"
-            r = requests.get(token_url, auth=(settings.MPESA_CONSUMER_KEY, settings.MPESA_CONSUMER_SECRET), timeout=30)
-            r.raise_for_status()
-            access_token = r.json().get("access_token")
+            response = cl.stk_push(
+                phone_number,
+                amount,
+                account_reference,
+                transaction_desc,
+                callback_url,
+            )
 
-            shortcode = settings.MPESA_EXPRESS_SHORTCODE
-            passkey = settings.MPESA_PASSKEY
-            timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
-            password = base64.b64encode(f"{shortcode}{passkey}{timestamp}".encode()).decode()
+            return render(request, "BudgetingApp/payment_success.html", {"response": response})
 
-            payload = {
-                "BusinessShortCode": shortcode,
-                "Password": password,
-                "Timestamp": timestamp,
-                "TransactionType": "CustomerPayBillOnline",
-                "Amount": int(amount),
-                "PartyA": phone,
-                "PartyB": shortcode,
-                "PhoneNumber": phone,
-                "CallBackURL": request.build_absolute_uri("/BudgetingApp/mpesa-callback/"),
-                "AccountReference": "BudgetingApp",
-                "TransactionDesc": "Budget payment"
-            }
+    return redirect("payment_form")
+# -----------------------------
+# PAYMENT HISTORY VIEW
+# -----------------------------
+def payment_history(request):
+    payments = Payment.objects.filter(user=request.user).order_by("-created_at")
+    return render(request, "payment_history.html", {"payments": payments})
 
-            headers = {"Authorization": f"Bearer {access_token}", "Content-Type": "application/json"}
-            stk_url = "https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest"
-            resp = requests.post(stk_url, json=payload, headers=headers, timeout=30)
-            resp.raise_for_status()
-            # Pass response to template or messages
-            from django.contrib import messages
-            messages.success(request, "STK Push sent. Check your phone to complete the payment.")
-            return redirect("payment-success")
-        except Exception as e:
-            from django.contrib import messages
-            messages.error(request, f"Error sending STK Push: {e}")
-            return render(request, "BudgetingApp/payment_form.html", {"phone": phone, "amount": amount})
-
-    return render(request, "BudgetingApp/payment_form.html")
-
-
-def payment_success(request):
-    return render(request, "BudgetingApp/payment_success.html")
-
-
+# -----------------------------
+# M-PESA CALLBACK VIEW
+# -----------------------------
 @csrf_exempt
 def mpesa_callback(request):
-    try:
-        data = json.loads(request.body.decode("utf-8"))
-        # Here you could parse the callback and save to DB or update transaction status
-        print("Mpesa callback received:", data)
-        return JsonResponse({"ResultCode": 0, "ResultDesc": "Callback processed"})
-    except Exception as e:
-        print("Mpesa callback parse error:", e)
-        return JsonResponse({"ResultCode": 1, "ResultDesc": "Error parsing callback"}, status=400)
+    data = json.loads(request.body.decode('utf-8'))
+    print("MPESA CALLBACK RECEIVED:", data)
+    return JsonResponse({"ResultCode": 0, "ResultDesc": "Accepted"})
+
+# -----------------------------
+# PAYMENT SUCCESS VIEW
+# -----------------------------
+def payment_success(request):
+    return render(request, 'payment_success.html')
