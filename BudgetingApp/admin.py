@@ -11,12 +11,15 @@ from .models import (
     Transaction,
     FinancialReport,
     BudgetReminder,
+    SubAccount,
+    Payment,
+    PaymentAllocation,
 )
 
 
 @admin.register(BudgetItem)
 class BudgetItemAdmin(admin.ModelAdmin):
-    list_display = ('name', 'amount', 'urgency', 'created_at')
+    list_display = ('name', 'category', 'amount', 'urgency', 'created_at')
     list_filter = ('urgency', 'created_at')
     search_fields = ('name', 'description')
     ordering = ('-created_at',)
@@ -86,3 +89,22 @@ class BudgetReminderAdmin(admin.ModelAdmin):
     list_display = ('message', 'remind_on', 'is_sent')
     list_filter = ('remind_on', 'is_sent')
     search_fields = ('message',)
+
+
+@admin.register(SubAccount)
+class SubAccountAdmin(admin.ModelAdmin):
+    list_display = ('name', 'budget_item', 'balance', 'owner')
+    search_fields = ('name',)
+
+
+@admin.register(Payment)
+class PaymentAdmin(admin.ModelAdmin):
+    list_display = ('id', 'owner', 'amount', 'method', 'status', 'created_at')
+    list_filter = ('method', 'status', 'created_at')
+    search_fields = ('external_id',)
+
+
+@admin.register(PaymentAllocation)
+class PaymentAllocationAdmin(admin.ModelAdmin):
+    list_display = ('payment', 'budget_item', 'amount')
+    search_fields = ('budget_item__name',)

@@ -1,0 +1,12 @@
+{% extends 'BudgetingApp/base.html' %}
+{% block content %}
+<div class="container py-4">
+  <h3>{{ object.report_type }} Report</h3>
+  <div class="card">
+    <div class="card-body">
+      <pre>{{ object.content }}</pre>
+    </div>
+  </div>
+  <a href="{% url 'financialreport-list' %}" class="btn btn-secondary mt-3">Back</a>
+</div>
+{% endblock %}

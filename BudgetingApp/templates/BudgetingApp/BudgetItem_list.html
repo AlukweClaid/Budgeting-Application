@@ -22,6 +22,7 @@
       <td>{{ item.urgency }}</td>
       <td>
         <a class="btn btn-sm btn-outline-secondary" href="{% url 'budgetitem-edit' item.pk %}">Edit</a>
+        <a class="btn btn-sm btn-outline-primary" href="{% url 'payments' %}">Pay</a>
         <a class="btn btn-sm btn-outline-danger" href="{% url 'budgetitem-delete' item.pk %}">Delete</a>
       </td>
     </tr>
