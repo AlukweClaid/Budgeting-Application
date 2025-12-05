@@ -49,6 +49,8 @@ from .forms import (
     FinancialReportForm,
 )
 
+# create your views here.
+
 # -----------------------------
 # M-PESA TEST VIEW
 # -----------------------------
