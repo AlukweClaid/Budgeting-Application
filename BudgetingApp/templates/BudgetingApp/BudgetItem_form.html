@@ -9,7 +9,8 @@
             {% csrf_token %}
             {{ form.as_p }}
             <div class="d-grid gap-2 d-sm-flex">
-              <button class="btn btn-success" type="submit">Save</button>
+              <button class="btn btn-success" type="submit" name="save">Save</button>
+              <button class="btn btn-primary" type="submit" name="pay">Pay</button>
               <a class="btn btn-secondary" href="{% url 'budgetitem-list' %}">Cancel</a>
             </div>
           </form>

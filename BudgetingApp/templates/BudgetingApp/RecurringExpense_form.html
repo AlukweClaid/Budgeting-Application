@@ -1,0 +1,15 @@
+{% extends 'BudgetingApp/base.html' %}
+{% block content %}
+<div class="container py-4">
+  <h3>{% if object %}Edit{% else %}Add{% endif %} Recurring Expense</h3>
+  <form method="post">{% csrf_token %}
+    {{ form.non_field_errors }}
+    <div class="mb-3">{{ form.name.label_tag }}{{ form.name }}</div>
+    <div class="mb-3">{{ form.amount.label_tag }}{{ form.amount }}</div>
+    <div class="mb-3">{{ form.frequency.label_tag }}{{ form.frequency }}</div>
+    <div class="mb-3">{{ form.next_due_date.label_tag }}{{ form.next_due_date }}</div>
+    <button class="btn btn-primary">Save</button>
+    <a href="{% url 'recurringexpense-list' %}" class="btn btn-secondary">Cancel</a>
+  </form>
+</div>
+{% endblock %}

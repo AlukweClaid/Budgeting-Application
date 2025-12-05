@@ -5,6 +5,7 @@ from django.conf import settings
 class BudgetItem(models.Model):
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, blank=True, related_name='budget_items')
     name = models.CharField(max_length=100)
+    category = models.CharField(max_length=100, blank=True, null=True)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     description = models.TextField(blank=True, null=True)
     urgency = models.CharField(max_length=50, choices=[
@@ -104,6 +105,62 @@ class BudgetReminder(models.Model):
     is_sent = models.BooleanField(default=False)
     def __str__(self):
         return f"Reminder: {self.message} on {self.remind_on}"
+
+
+class MpesaCallbackLog(models.Model):
+    """Store raw M-Pesa callback payloads for auditing and debugging."""
+    payment = models.ForeignKey('Payment', on_delete=models.SET_NULL, null=True, blank=True)
+    payload = models.JSONField()
+    received_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"MpesaCallbackLog {self.id} for payment {self.payment_id} at {self.received_at}"
+
+
+# Payment & subaccount models
+class SubAccount(models.Model):
+    """A logical sub-account to route payments to a BudgetItem or other target."""
+    owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, blank=True, related_name='subaccounts')
+    name = models.CharField(max_length=150)
+    budget_item = models.ForeignKey(BudgetItem, on_delete=models.SET_NULL, null=True, blank=True)
+    balance = models.DecimalField(max_digits=12, decimal_places=2, default=0)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.name} ({self.budget_item.name if self.budget_item else 'No item'})"
+
+
+class Payment(models.Model):
+    """Record a payment attempt/receipt from Stripe or M-Pesa."""
+    PAYMENT_METHOD_CHOICES = [
+        ('stripe', 'Card / Stripe'),
+        ('mpesa', 'M-Pesa'),
+    ]
+    PAYMENT_STATUS = [
+        ('pending', 'Pending'),
+        ('completed', 'Completed'),
+        ('failed', 'Failed'),
+    ]
+    owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, blank=True, related_name='payments')
+    amount = models.DecimalField(max_digits=12, decimal_places=2)
+    method = models.CharField(max_length=20, choices=PAYMENT_METHOD_CHOICES)
+    status = models.CharField(max_length=20, choices=PAYMENT_STATUS, default='pending')
+    external_id = models.CharField(max_length=255, blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"Payment {self.id} {self.amount} {self.method} {self.status}"
+
+
+class PaymentAllocation(models.Model):
+    """Allocate part or all of a Payment to a BudgetItem (sub-account)."""
+    payment = models.ForeignKey(Payment, on_delete=models.CASCADE, related_name='allocations')
+    budget_item = models.ForeignKey(BudgetItem, on_delete=models.CASCADE)
+    amount = models.DecimalField(max_digits=12, decimal_places=2)
+
+    def __str__(self):
+        return f"{self.payment} -> {self.budget_item.name}: {self.amount}"
     
 
     

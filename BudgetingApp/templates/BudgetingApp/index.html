@@ -1,43 +1,106 @@
 {% extends 'BudgetingApp/base.html' %}
 {% block content %}
-  <div class="bg-info bg-opacity-10 p-5 rounded mb-4">
-    <h2 class="mb-2">📊 Welcome to Your Budget Dashboard</h2>
-    <p class="lead mb-0">Manage your budget, track expenses, and achieve your financial goals.</p>
+  <div class="bg-white p-4 rounded mb-4 shadow-sm border-0">
+    <div class="d-flex justify-content-between align-items-center">
+      <div>
+        <h1 class="h3 mb-1">📊 Your Budget Dashboard</h1>
+        <p class="text-muted mb-0">Overview of your items, transactions and accounts. Use quick actions to add new records.</p>
+      </div>
+      <div>
+        <a href="{% url 'budgetitem-add' %}" class="btn dashboard-btn dashboard-btn-primary">+ Add Item</a>
+      </div>
+    </div>
   </div>
 
-  <div class="row">
-    <div class="col-md-3 mb-4">
-      <div class="card border-0 shadow-sm h-100">
-        <div class="card-body text-center">
-          <h5 class="card-title">Budget Items</h5>
-          <p class="display-5 text-success mb-3">{{ counts.budget_items }}</p>
-          <a href="{% url 'budgetitem-list' %}" class="btn btn-sm btn-outline-success">View</a>
+  <div class="row g-3">
+    <div class="col-md-4">
+      <div class="card dashboard-card shadow-sm h-100">
+        <div class="card-body">
+          <div class="d-flex align-items-center">
+            <div class="me-3 display-6">💼</div>
+            <div>
+              <h6 class="mb-0">Budget Items</h6>
+              <div class="h2 text-success">{{ counts.budget_items }}</div>
+              <a href="{% url 'budgetitem-list' %}" class="btn btn-sm btn-outline-success dashboard-btn mt-2">View items</a>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-    <div class="col-md-3 mb-4">
-      <div class="card border-0 shadow-sm h-100">
-        <div class="card-body text-center">
-          <h5 class="card-title">Categories</h5>
-          <p class="display-5 text-info mb-3">{{ counts.categories }}</p>
-          <a href="{% url 'category-list' %}" class="btn btn-sm btn-outline-info">View</a>
+
+    
+
+    <div class="col-md-4">
+      <div class="card shadow-sm h-100">
+        <div class="card-body">
+          <div class="d-flex align-items-center">
+            <div class="me-3 display-6">💳</div>
+            <div>
+              <h6 class="mb-0">Transactions</h6>
+              <div class="h2 text-warning">{{ counts.transactions }}</div>
+              <a href="{% url 'transaction-list' %}" class="btn btn-sm btn-outline-warning dashboard-btn mt-2">View transactions</a>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-    <div class="col-md-3 mb-4">
-      <div class="card border-0 shadow-sm h-100">
+
+    <div class="col-md-3">
+      <div class="card dashboard-card shadow-sm h-100">
         <div class="card-body text-center">
-          <h5 class="card-title">Transactions</h5>
-          <p class="display-5 text-warning mb-3">{{ counts.transactions }}</p>
-          <a href="{% url 'transaction-list' %}" class="btn btn-sm btn-outline-warning">View</a>
+          <h6 class="mb-1">Goals</h6>
+          <div class="h3 text-danger">{{ counts.goals }}</div>
+          <small class="text-muted">Track savings targets</small>
         </div>
       </div>
     </div>
-    <div class="col-md-3 mb-4">
-      <div class="card border-0 shadow-sm h-100">
+
+    <div class="col-md-3">
+      <div class="card dashboard-card shadow-sm h-100">
         <div class="card-body text-center">
-          <h5 class="card-title">Goals</h5>
-          <p class="display-5 text-danger mb-3">{{ counts.goals }}</p>
+          <h6 class="mb-1">Recurring</h6>
+          <div class="h3">{{ counts.recurring }}</div>
+          <small class="text-muted">Scheduled expenses</small>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-3">
+      <div class="card dashboard-card shadow-sm h-100">
+        <div class="card-body text-center">
+          <h6 class="mb-1">Income</h6>
+          <div class="h3">{{ counts.incomes }}</div>
+          <small class="text-muted">Sources</small>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-3">
+      <div class="card dashboard-card shadow-sm h-100">
+        <div class="card-body text-center">
+          <h6 class="mb-1">Savings</h6>
+          <div class="h3">{{ counts.savings }}</div>
+          <small class="text-muted">Accounts</small>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4 mt-3">
+      <div class="card dashboard-card shadow-sm h-100">
+        <div class="card-body">
+          <h6 class="mb-2">Reminders</h6>
+          <p class="mb-0">You have <strong>{{ counts.reminders }}</strong> reminders scheduled.</p>
+          <a href="{% url 'budgetreminder-list' %}" class="small d-block mt-2">Manage reminders</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-8 mt-3">
+      <div class="card dashboard-card shadow-sm h-100">
+        <div class="card-body">
+          <h6 class="mb-2">Reports</h6>
+          <p class="mb-0">You have <strong>{{ counts.reports }}</strong> saved reports. Generate or view detailed statements.</p>
+          <a href="{% url 'financialreport-list' %}" class="small d-block mt-2">View reports</a>
         </div>
       </div>
     </div>

@@ -1,0 +1,25 @@
+{% extends 'BudgetingApp/base.html' %}
+{% block content %}
+<div class="container py-4">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h3>Savings Accounts</h3>
+    <a href="{% url 'savingsaccount-add' %}" class="btn btn-primary">Add Savings Account</a>
+  </div>
+  <div class="list-group">
+    {% for acc in object_list %}
+      <div class="list-group-item d-flex justify-content-between align-items-center">
+        <div>
+          <h5 class="mb-1">{{ acc.name }}</h5>
+          <small>Balance: {{ acc.balance }} • Rate: {{ acc.interest_rate }}%</small>
+        </div>
+        <div class="btn-group">
+          <a href="{% url 'savingsaccount-edit' acc.id %}" class="btn btn-sm btn-outline-secondary">Edit</a>
+          <a href="{% url 'savingsaccount-delete' acc.id %}" class="btn btn-sm btn-outline-danger">Delete</a>
+        </div>
+      </div>
+    {% empty %}
+      <div class="alert alert-info">No savings accounts yet.</div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

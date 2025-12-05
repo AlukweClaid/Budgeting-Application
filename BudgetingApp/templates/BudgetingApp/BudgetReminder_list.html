@@ -1,0 +1,25 @@
+{% extends 'BudgetingApp/base.html' %}
+{% block content %}
+<div class="container py-4">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h3>Reminders</h3>
+    <a href="{% url 'budgetreminder-add' %}" class="btn btn-primary">Add Reminder</a>
+  </div>
+  <div class="list-group">
+    {% for r in object_list %}
+      <div class="list-group-item d-flex justify-content-between align-items-center">
+        <div>
+          <h5 class="mb-1">{{ r.message }}</h5>
+          <small>Remind on: {{ r.remind_on }} • Sent: {{ r.is_sent }}</small>
+        </div>
+        <div class="btn-group">
+          <a href="{% url 'budgetreminder-edit' r.id %}" class="btn btn-sm btn-outline-secondary">Edit</a>
+          <a href="{% url 'budgetreminder-delete' r.id %}" class="btn btn-sm btn-outline-danger">Delete</a>
+        </div>
+      </div>
+    {% empty %}
+      <div class="alert alert-info">No reminders yet.</div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}
