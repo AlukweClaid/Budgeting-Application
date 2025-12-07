@@ -3,7 +3,7 @@
   <div class="bg-white p-4 rounded mb-4 shadow-sm border-0">
     <div class="d-flex justify-content-between align-items-center">
       <div>
-        <h1 class="h3 mb-1">📊 Your Budget Dashboard</h1>
+        <h1 class="h3 mb-1">Your Budget Dashboard</h1>
         <p class="text-muted mb-0">Overview of your items, transactions and accounts. Use quick actions to add new records.</p>
       </div>
       <div>
@@ -17,7 +17,7 @@
       <div class="card dashboard-card shadow-sm h-100">
         <div class="card-body">
           <div class="d-flex align-items-center">
-            <div class="me-3 display-6">💼</div>
+            <div class="me-3 display-6"></div>
             <div>
               <h6 class="mb-0">Budget Items</h6>
               <div class="h2 text-success">{{ counts.budget_items }}</div>
@@ -34,7 +34,7 @@
       <div class="card shadow-sm h-100">
         <div class="card-body">
           <div class="d-flex align-items-center">
-            <div class="me-3 display-6">💳</div>
+            <div class="me-3 display-6"></div>
             <div>
               <h6 class="mb-0">Transactions</h6>
               <div class="h2 text-warning">{{ counts.transactions }}</div>
@@ -90,7 +90,7 @@
         <div class="card-body">
           <h6 class="mb-2">Reminders</h6>
           <p class="mb-0">You have <strong>{{ counts.reminders }}</strong> reminders scheduled.</p>
-          <a href="{% url 'budgetreminder-list' %}" class="small d-block mt-2">Manage reminders</a>
+          <a href="{% url 'budgetreminder-list' %}" class="btn btn-sm btn-outline-danger dashboard-btn mt-2">Manage reminders</a>
         </div>
       </div>
     </div>
@@ -100,7 +100,7 @@
         <div class="card-body">
           <h6 class="mb-2">Reports</h6>
           <p class="mb-0">You have <strong>{{ counts.reports }}</strong> saved reports. Generate or view detailed statements.</p>
-          <a href="{% url 'financialreport-list' %}" class="small d-block mt-2">View reports</a>
+          <a href="{% url 'financialreport-list' %}" class="btn btn-sm btn-outline-success dashboard-btn mt-2">View reports</a>
         </div>
       </div>
     </div>

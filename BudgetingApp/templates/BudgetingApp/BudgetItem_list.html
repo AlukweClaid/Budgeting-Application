@@ -1,7 +1,7 @@
 {% extends 'BudgetingApp/base.html' %}
 {% block content %}
 <div class="d-flex justify-content-between align-items-center mb-4">
-  <h2 class="mb-0">📋 Budget Items</h2>
+  <h2 class="mb-0">Budget Items</h2>
   <a class="btn btn-success" href="{% url 'budgetitem-add' %}">➕ Add Item</a>
 </div>
 <div class="table-responsive">
@@ -17,7 +17,7 @@
   <tbody>
     {% for item in object_list %}
     <tr>
-      <td><a href="{% url 'budgetitem-detail' item.pk %}">{{ item.name }}</a></td>
+      <td><a class="btn btn-sm btn-outline-primary" href="{% url 'budgetitem-detail' item.pk %}">{{ item.name }}</a></td>
       <td>{{ item.amount }}</td>
       <td>{{ item.urgency }}</td>
       <td>
