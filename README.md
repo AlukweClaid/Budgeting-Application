@@ -4,7 +4,7 @@ Its a tool designed to help one keep track of their financial expenditure and he
 - I like to think of the tool as something that can be incorporated in financial institution apps such as an Mpesa or bank applications that can help to achieve financial literacy and nice financial budgeting since on the financial apps is where the transactions take place on a full time basis
 # Purose of the app
 - It is designed to help individuals not misappropriate the funds and with various updates it helps one be able to not miss payments of urgent stuff such as rent due to bad financial decisions which has proved to be a great problem with the current generation hence its a useful tool to help one not miss important deadlines on various payments and when one decides to acquire loans on the financial instituitions apps they atleast have a clear road map on where to spend and help to avoid getting loans and repaying a loan that was never useful to the individual and it curbs issues such as financial addictions such as gambling since with proper budgeting and financial allocation one gets to achieve alot in terms of financial growth.
-# Solution it solves 
+# Solution it provides
 - With proper funds allocation and implementation the economic development of a nation is guaranteed since one can only get into necessary debt not unnecessary since it brings about proper financial decisions and one cannot have regrets on taking some loans and it helps since it eases repayment of loans since one doesn't feel a burden because the loans they take had a proper plan for implementation hence solving such a problem also takes care of ones financial well being thus a happy individual leads to a happy economy.  
 # Steps to achieving the tool
  - Firstly I ensured the first instance of the App is running
@@ -48,6 +48,7 @@ Its a tool designed to help one keep track of their financial expenditure and he
     - Handled success and failure responses appropriately in the application
     - Committed the M-Pesa integration changes to the Git repository.
 # end
+
 
 
 
