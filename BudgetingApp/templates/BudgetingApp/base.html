@@ -57,7 +57,7 @@
     <nav class="navbar navbar-expand-lg navbar-dark bg-success">
       <div class="container">
         <a class="navbar-brand fw-bold" href="{% url 'budget_home' %}"
-          >💰 Budgeting App</a
+          >Budgeting App</a
         >
         <button
           class="navbar-toggler"
@@ -129,7 +129,11 @@
                   >
                 </li>
                 <li><hr class="dropdown-divider" /></li>
-                <li><a class="dropdown-item" href="{% url 'payments' %}">Payments</a></li>
+                <li>
+                  <a class="dropdown-item" href="{% url 'payments' %}"
+                    >Payments</a
+                  >
+                </li>
               </ul>
             </li>
             {% if user.is_authenticated %}
@@ -176,7 +180,8 @@
       <div class="container">&copy; {% now "Y" %} Budgeting App</div>
     </footer>
 
-    <script defer
+    <script
+      defer
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
       crossorigin="anonymous"
     ></script>

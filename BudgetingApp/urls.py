@@ -62,7 +62,7 @@ urlpatterns = [
     path('reports/', views.FinancialReportListView.as_view(), name='financialreport-list'),
     path('reports/<int:pk>/', views.FinancialReportDetailView.as_view(), name='financialreport-detail'),
 
-    # MPESA Payment routes
+    
 
    # M-PESA PAYMENT URLS
 path('payments/', views.payment_form, name='payments'),  
